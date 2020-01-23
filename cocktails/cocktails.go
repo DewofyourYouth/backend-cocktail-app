@@ -3,27 +3,34 @@ package cocktails
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/jinzhu/gorm"
 )
 
 // Ingredient is a type that accepts a name: string, amount: float64 and unit: string
 type Ingredient struct {
-	Name   string  `json:"name"`
-	Amount float64 `json:"amount"`
-	Unit   string  `json:"unit"`
+	gorm.Model
+	Name             string  `json:"name"`
+	Amount           float64 `json:"amount"`
+	Unit             string  `json:"unit"`
+	CocktailIngRefer uint
 }
 
 // Instruction is a type that accepts an int and a string
 type Instruction struct {
-	Step        int    `json:"step"`
-	Instruction string `json:"instruction"`
+	gorm.Model
+	Step             int    `json:"step"`
+	Instruction      string `json:"instruction"`
+	CocktailDirRefer uint
 }
 
 // Cocktail is a type for a cocktail recipe that accepts Name: string, Ingredients: []Ingredient and Directions: []Instruction
 type Cocktail struct {
+	gorm.Model
 	Name        string        `json:"cocktail_name"`
 	Description string        `json:"description"`
-	Ingredients []Ingredient  `json:"ingredients_list"`
-	Directions  []Instruction `json:"directions"`
+	Ingredients []Ingredient  `gorm:"foreignkey:CocktailIngRefer" json:"ingredients_list"`
+	Directions  []Instruction `gorm:"foreignkey:CocktailDirRefer;" json:"directions"`
 }
 
 //Cocktails is
@@ -82,3 +89,25 @@ func UnmarshalCocktailJSON(s string) []Cocktail {
 	}
 	return cocktails
 }
+
+// IntiateModels is a
+func IntiateModels() {
+	db, err := gorm.Open("sqlite3", "cocktails.db")
+	if err != nil {
+		panic("failed to connect to database")
+	}
+	defer db.Close()
+	fmt.Println("connected successfully")
+	db.AutoMigrate(Cocktail{})
+	db.AutoMigrate(Ingredient{})
+	db.AutoMigrate(Instruction{})
+}
+
+// func GetList() {
+// 	db, err := gorm.Open("sqlite3", "cocktails.db")
+// 	if err != nil {
+// 		panic("failed to connect to database")
+// 	}
+// 	defer db.Close()
+// 	db.Find(&cocktails)
+// }
