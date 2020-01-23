@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/jinzhu/gorm"
+
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
@@ -56,6 +58,12 @@ func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 	}
 	*cs = append(*cs, c)
 	newCocktail := &c
+	db, dbErr := gorm.Open("sqlite3", "cocktails.db")
+	if dbErr != nil {
+		panic("failed to connect")
+	}
+	defer db.Close()
+	db.Create(newCocktail)
 	bs, err1 := json.Marshal(newCocktail)
 	if err1 != nil {
 		http.Error(w, err1.Error(), http.StatusBadRequest)
@@ -66,15 +74,15 @@ func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	// db, err := gorm.Open("sqlite3", "cocktails.db")
-	// if err != nil {
-	// 	panic("failed to connect to database")
-	// }
-	// defer db.Close()
+	db, err := gorm.Open("sqlite3", "cocktails.db")
+	if err != nil {
+		panic("failed to connect to database")
+	}
+	defer db.Close()
 
-	// db.AutoMigrate(&cks.Ingredient{})
-	// db.AutoMigrate(&cks.Instruction{})
-	// db.AutoMigrate(&cks.Cocktail{})
+	db.AutoMigrate(&cks.Ingredient{})
+	db.AutoMigrate(&cks.Instruction{})
+	db.AutoMigrate(&cks.Cocktail{})
 
 	whiteRussian := cks.Cocktail{Name: "White Russian", Description: "A decadent adult milkshake", Ingredients: wrIngredients, Directions: wrDirections}
 	dryMartini := cks.Cocktail{Name: "Dry Martini", Description: "Preferred beverage of James Bond", Ingredients: dmIngredients, Directions: dmDirections}
@@ -82,7 +90,9 @@ func main() {
 	whiteRussian.Print()
 	dryMartini.Print()
 	cocktailsSlice := Cocktails{whiteRussian, dryMartini}
-
+	for _, v := range cocktailsSlice {
+		db.Create(&v)
+	}
 	fmt.Println(cks.Cocktails(cocktailsSlice).MakeCocktailJSON())
 	cks.Cocktails(cocktailsSlice).Print()
 	cs := &cocktails

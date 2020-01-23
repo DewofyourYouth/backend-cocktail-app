@@ -27,7 +27,7 @@ type Instruction struct {
 // Cocktail is a type for a cocktail recipe that accepts Name: string, Ingredients: []Ingredient and Directions: []Instruction
 type Cocktail struct {
 	gorm.Model
-	Name        string        `json:"cocktail_name"`
+	Name        string        `gorm:"unique;not null" json:"cocktail_name"`
 	Description string        `json:"description"`
 	Ingredients []Ingredient  `gorm:"foreignkey:CocktailIngRefer" json:"ingredients_list"`
 	Directions  []Instruction `gorm:"foreignkey:CocktailDirRefer;" json:"directions"`
