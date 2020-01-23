@@ -102,12 +102,3 @@ func IntiateModels() {
 	db.AutoMigrate(Ingredient{})
 	db.AutoMigrate(Instruction{})
 }
-
-// func GetList() {
-// 	db, err := gorm.Open("sqlite3", "cocktails.db")
-// 	if err != nil {
-// 		panic("failed to connect to database")
-// 	}
-// 	defer db.Close()
-// 	db.Find(&cocktails)
-// }
