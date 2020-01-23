@@ -86,12 +86,11 @@ func main() {
 
 	whiteRussian := cks.Cocktail{Name: "White Russian", Description: "A decadent adult milkshake", Ingredients: wrIngredients, Directions: wrDirections}
 	dryMartini := cks.Cocktail{Name: "Dry Martini", Description: "Preferred beverage of James Bond", Ingredients: dmIngredients, Directions: dmDirections}
-	// db.Create(&whiteRussian)
 	whiteRussian.Print()
 	dryMartini.Print()
 	cocktailsSlice := Cocktails{whiteRussian, dryMartini}
-	for _, v := range cocktailsSlice {
-		db.Create(&v)
+	for _, cocktail := range cocktailsSlice {
+		db.Create(&cocktail)
 	}
 	fmt.Println(cks.Cocktails(cocktailsSlice).MakeCocktailJSON())
 	cks.Cocktails(cocktailsSlice).Print()
@@ -101,5 +100,4 @@ func main() {
 	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
 	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
 	log.Fatal(http.ListenAndServe(":8080", router))
-
 }
