@@ -105,6 +105,7 @@ func main() {
 	db.Raw("SELECT step, instruction FROM instructions WHERE cocktail_dir_refer=? ORDER BY step", 1).Scan(&dirs)
 	// fmt.Println(ings, dirs)
 	var ingredientsSlice []cks.Ingredient
+	var directionsSlice []cks.Instruction
 	for _, v := range ings {
 		ingredientsSlice = append(ingredientsSlice, cks.Ingredient{
 			Name:             v.Name,
@@ -113,13 +114,21 @@ func main() {
 			CocktailIngRefer: 1,
 		})
 	}
+	for _, v := range dirs {
+		directionsSlice = append(directionsSlice, cks.Instruction{
+			Step:             v.Step,
+			Instruction:      v.Instruction,
+			CocktailDirRefer: 1,
+		})
+	}
 	fmt.Println(ingredientsSlice)
 	db.Find(&cktls)
 	fmt.Println(cktls[0].Name)
-	wr := &cktls[0]
-	*wr = cks.Cocktail(*wr)
-	wr.Ingredients = append(wr.Ingredients, ingredientsSlice...)
-	fmt.Println(wr)
+	dm := &cktls[0]
+	*dm = cks.Cocktail(*dm)
+	dm.Ingredients = append(dm.Ingredients, ingredientsSlice...)
+	dm.Directions = append(dm.Directions, directionsSlice...)
+	fmt.Println(dm)
 	// wr.ingredients = append(wr.Ingredients, ingredientsSlice...)
 	fmt.Printf("%v\n", cktls)
 	// db.First(&cktl)

@@ -9,23 +9,23 @@ Content-Type: application/json
 
 {
   "cocktail_name": "White Russian",
-  "description": "A decadent adult milkshake",
+  "description": "The dude abides.",
   "glass": "short glass",
   "garnish": null,
   "ingredients": [
     {
       "name": "vodka",
-      "amount": "2", 
+      "amount": 2, 
       "unit": "part"
     },
     {
     "name": "kalua",
-    "amount": "1", 
+    "amount": 1, 
     "unit": "part"
     },
     {
     "name": "whole milk",
-    "amount": "2", 
+    "amount": 2, 
     "unit": "part"
     }
   ],
