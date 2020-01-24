@@ -7,9 +7,9 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 
-	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
@@ -19,6 +19,7 @@ type cocktail cks.Cocktail
 
 var cocktails Cocktails
 
+// Dummy data start
 var wrIngredients []cks.Ingredient = []cks.Ingredient{
 	cks.Ingredient{Name: "vodka", Amount: 2, Unit: "part"},
 	cks.Ingredient{Name: "kalua", Amount: 1, Unit: "part"},
@@ -42,6 +43,8 @@ var dmDirections []cks.Instruction = []cks.Instruction{
 	cks.Instruction{Step: 2, Instruction: "Stir well, about 30 seconds, then strain into martini glass."},
 	cks.Instruction{Step: 3, Instruction: "Garnish with olive or lemon twist and serve."},
 }
+
+// Dummy data end
 
 // API Route handlers
 func getListOfCocktails(w http.ResponseWriter, r *http.Request) {
@@ -84,31 +87,69 @@ func main() {
 	db.AutoMigrate(&cks.Instruction{})
 	db.AutoMigrate(&cks.Cocktail{})
 
-	whiteRussian := cks.Cocktail{
+	db.Create(&cks.Cocktail{
 		Name:        "White Russian",
 		Glass:       "short glass",
+		Garnish:     "none",
 		Description: "A decadent adult milkshake",
 		Ingredients: wrIngredients,
-		Directions:  wrDirections}
-	dryMartini := cks.Cocktail{
+		Directions:  wrDirections})
+
+	db.Create(&cks.Cocktail{
 		Name:        "Dry Martini",
 		Description: "Preferred beverage of James Bond",
 		Glass:       "martini glass",
 		Garnish:     "olive or lemon twist",
 		Ingredients: dmIngredients,
-		Directions:  dmDirections}
-	whiteRussian.Print()
-	dryMartini.Print()
-	cocktailsSlice := Cocktails{whiteRussian, dryMartini}
-	for _, cocktail := range cocktailsSlice {
-		db.Create(&cocktail)
+		Directions:  dmDirections})
+
+	var cktls cks.Cocktails
+	var cktl cks.Cocktail
+	var ingredients cks.Ingredient
+	// var directions cks.Instruction
+	db.Model(&cktl).Related(&ingredients)
+	type Ing struct {
+		Name   string
+		Amount float64
+		Unit   string
 	}
-	fmt.Println(cks.Cocktails(cocktailsSlice).MakeCocktailJSON())
-	cks.Cocktails(cocktailsSlice).Print()
-	cs := &cocktails
-	cocktails = append(cocktails, cocktailsSlice...)
+	type Ings []Ing
+	type Dir struct {
+		Step        int
+		Instruction string
+	}
+	var ings Ings
+	var dirs []Dir
+	db.Raw("SELECT name, amount, unit FROM ingredients WHERE cocktail_ing_refer=?", 1).Scan(&ings)
+	db.Raw("SELECT step, instruction FROM instructions WHERE cocktail_dir_refer=? ORDER BY step", 1).Scan(&dirs)
+	// fmt.Println(ings, dirs)
+	var ingredientsSlice []cks.Ingredient
+	for _, v := range ings {
+		fmt.Println(v.Name)
+		ingredientsSlice = append(ingredientsSlice, cks.Ingredient{
+			Name:             v.Name,
+			Amount:           v.Amount,
+			Unit:             v.Unit,
+			CocktailIngRefer: 1,
+		})
+	}
+	fmt.Println(ingredientsSlice)
+	db.Find(&cktls)
+	fmt.Println(cktls[0].Name)
+	wr := &cktls[0]
+	*wr = cks.Cocktail(*wr)
+	wr.Ingredients = append(wr.Ingredients, ingredientsSlice...)
+	fmt.Println(wr)
+	// wr.ingredients = append(wr.Ingredients, ingredientsSlice...)
+	fmt.Printf("%v\n", cktls)
+	// db.First(&cktl)
+	// fmt.Printf("%v\n", cktl)
+	// fmt.Println(cks.Cocktails(cktls).MakeCocktailJSON())
+	// cks.Cocktails(cktls).Print()
+	// cs := &cocktails
+	// cocktails = append(cocktails, cktls...)
 	router := mux.NewRouter()
 	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
-	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
+	// router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

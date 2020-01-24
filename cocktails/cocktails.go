@@ -13,7 +13,7 @@ type Ingredient struct {
 	Name             string  `json:"name"`
 	Amount           float64 `json:"amount"`
 	Unit             string  `json:"unit"`
-	CocktailIngRefer uint
+	CocktailIngRefer uint    `json:"cockail-id"`
 }
 
 // Instruction is a type that accepts an int and a string
@@ -21,7 +21,7 @@ type Instruction struct {
 	gorm.Model
 	Step             int    `json:"step"`
 	Instruction      string `json:"instruction"`
-	CocktailDirRefer uint
+	CocktailDirRefer uint   `json:"cockail-id"`
 }
 
 // Cocktail is a type for a cocktail recipe that accepts Name: string, Ingredients: []Ingredient and Directions: []Instruction

@@ -12,6 +12,8 @@ Content-Type: application/json
         "DeletedAt": null,
         "cocktail_name": "Manhattan",
         "description": "A timeless whiskey bitter from NYC's Manhattan Club (circe 1880s)",
+        "garnish": "brandied cherry",
+        "glass": "chilled coupe",
         "ingredients_list": [
             {
                 "ID": 0,
@@ -53,16 +55,6 @@ Content-Type: application/json
                 "unit": "dash",
                 "CocktailIngRefer": 0
             },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "brandied cherry",
-                "amount": 1,
-                "unit": "garnish",
-                "CocktailIngRefer": 0
-            }
         ],
         "directions": [
             {
