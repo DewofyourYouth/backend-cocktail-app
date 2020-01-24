@@ -20,17 +20,6 @@ type cocktail cks.Cocktail
 var cocktails Cocktails
 
 // Dummy data start
-var wrIngredients []cks.Ingredient = []cks.Ingredient{
-	cks.Ingredient{Name: "vodka", Amount: 2, Unit: "part"},
-	cks.Ingredient{Name: "kalua", Amount: 1, Unit: "part"},
-	cks.Ingredient{Name: "whole milk", Amount: 2, Unit: "part"},
-}
-
-var wrDirections []cks.Instruction = []cks.Instruction{
-	cks.Instruction{Step: 1, Instruction: "Fill an old fashioned (short) glass with ice"},
-	cks.Instruction{Step: 2, Instruction: "Pour over the vodka and kalua"},
-	cks.Instruction{Step: 3, Instruction: "Top with whole milk"},
-}
 
 var dmIngredients []cks.Ingredient = []cks.Ingredient{
 	cks.Ingredient{Name: "cracked ice", Amount: 2, Unit: "large cubes"},
@@ -88,14 +77,6 @@ func main() {
 	db.AutoMigrate(&cks.Cocktail{})
 
 	db.Create(&cks.Cocktail{
-		Name:        "White Russian",
-		Glass:       "short glass",
-		Garnish:     "none",
-		Description: "A decadent adult milkshake",
-		Ingredients: wrIngredients,
-		Directions:  wrDirections})
-
-	db.Create(&cks.Cocktail{
 		Name:        "Dry Martini",
 		Description: "Preferred beverage of James Bond",
 		Glass:       "martini glass",
@@ -125,7 +106,6 @@ func main() {
 	// fmt.Println(ings, dirs)
 	var ingredientsSlice []cks.Ingredient
 	for _, v := range ings {
-		fmt.Println(v.Name)
 		ingredientsSlice = append(ingredientsSlice, cks.Ingredient{
 			Name:             v.Name,
 			Amount:           v.Amount,
@@ -145,9 +125,10 @@ func main() {
 	// db.First(&cktl)
 	// fmt.Printf("%v\n", cktl)
 	// fmt.Println(cks.Cocktails(cktls).MakeCocktailJSON())
-	// cks.Cocktails(cktls).Print()
+	cks.Cocktails(cktls).Print()
 	cs := &cocktails
 	cocktails = append(cocktails, cktls...)
+	fmt.Printf("%T", cs)
 	router := mux.NewRouter()
 	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
 	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)

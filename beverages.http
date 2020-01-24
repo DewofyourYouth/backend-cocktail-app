@@ -7,95 +7,40 @@ GET http://127.0.0.1:8080/
 POST http://127.0.0.1:8080/add/
 Content-Type: application/json
 
- {
-
-        "ID": 0,
-        "CreatedAt": "0001-01-01T00:00:00Z",
-        "UpdatedAt": "0001-01-01T00:00:00Z",
-        "DeletedAt": null,
-        "cocktail_name": "Mint Julep",
-        "description": "Signature drink of the Kentucky Derby.",
-        "garnish": "brandied cherry",
-        "glass": "copper mug",
-        "ingredients_list": [
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "simple syrup",
-                "amount": 0.25,
-                "unit": "ounce",
-                "CocktailIngRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "mint leaves",
-                "amount": 8,
-                "unit": "count",
-                "CocktailIngRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "bourbon",
-                "amount": 2,
-                "unit": "ounces",
-                "CocktailIngRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "orange bitters",
-                "amount": 1,
-                "unit": "dash",
-                "CocktailIngRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "brandied cherry",
-                "amount": 1,
-                "unit": "garnish",
-                "CocktailIngRefer": 0
-            }
-        ],
-        "directions": [
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "step": 1,
-                "instruction": "Add all the ingredients into a mixing glass with ice, and stir until well-chilled.",
-                "CocktailDirRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "step": 2,
-                "instruction": "Strain into a chilled coupe.",
-                "CocktailDirRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "step": 3,
-                "instruction": "Garnish with a brandied cherry.",
-                "CocktailDirRefer": 0
-            }
-        ]
-} 
+{
+  "cocktail_name": "White Russian",
+  "description": "A decadent adult milkshake",
+  "glass": "short glass",
+  "garnish": null,
+  "ingredients": [
+    {
+      "name": "vodka",
+      "amount": "2", 
+      "unit": "part"
+    },
+    {
+    "name": "kalua",
+    "amount": "1", 
+    "unit": "part"
+    },
+    {
+    "name": "whole milk",
+    "amount": "2", 
+    "unit": "part"
+    }
+  ],
+  "directions": [
+    {
+      "step": 1,
+      "instruction": "Fill an old fashioned (short) glass with ice"
+    },
+    {
+      "step": 2,
+      "instruction": "Pour over the vodka and kalua"
+    },
+    {
+      "step": 3,
+      "instruction": "Top with whole milk"
+    }
+  ]
+}
