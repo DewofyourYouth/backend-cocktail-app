@@ -1,91 +1,6 @@
 GET http://127.0.0.1:8080/
 
-###
-POST http://127.0.0.1:8080/add/
-Content-Type: application/json
 
- {
-
-        "ID": 0,
-        "CreatedAt": "0001-01-01T00:00:00Z",
-        "UpdatedAt": "0001-01-01T00:00:00Z",
-        "DeletedAt": null,
-        "cocktail_name": "Manhattan",
-        "description": "A timeless whiskey bitter from NYC's Manhattan Club (circe 1880s)",
-        "garnish": "brandied cherry",
-        "glass": "chilled coupe",
-        "ingredients_list": [
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "bourbon or rye",
-                "amount": 2,
-                "unit": "ounce",
-                "CocktailIngRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "sweet vermouth",
-                "amount": 1,
-                "unit": "oz",
-                "CocktailIngRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "agnostura bitters",
-                "amount": 2,
-                "unit": "dash",
-                "CocktailIngRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "name": "orange bitters",
-                "amount": 1,
-                "unit": "dash",
-                "CocktailIngRefer": 0
-            },
-        ],
-        "directions": [
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "step": 1,
-                "instruction": "Add all the ingredients into a mixing glass with ice, and stir until well-chilled.",
-                "CocktailDirRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "step": 2,
-                "instruction": "Strain into a chilled coupe.",
-                "CocktailDirRefer": 0
-            },
-            {
-                "ID": 0,
-                "CreatedAt": "0001-01-01T00:00:00Z",
-                "UpdatedAt": "0001-01-01T00:00:00Z",
-                "DeletedAt": null,
-                "step": 3,
-                "instruction": "Garnish with a brandied cherry.",
-                "CocktailDirRefer": 0
-            }
-        ]
-}
 
 
 ###
@@ -100,6 +15,8 @@ Content-Type: application/json
         "DeletedAt": null,
         "cocktail_name": "Mint Julep",
         "description": "Signature drink of the Kentucky Derby.",
+        "garnish": "brandied cherry",
+        "glass": "copper mug",
         "ingredients_list": [
             {
                 "ID": 0,

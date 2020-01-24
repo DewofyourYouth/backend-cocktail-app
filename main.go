@@ -146,10 +146,10 @@ func main() {
 	// fmt.Printf("%v\n", cktl)
 	// fmt.Println(cks.Cocktails(cktls).MakeCocktailJSON())
 	// cks.Cocktails(cktls).Print()
-	// cs := &cocktails
-	// cocktails = append(cocktails, cktls...)
+	cs := &cocktails
+	cocktails = append(cocktails, cktls...)
 	router := mux.NewRouter()
 	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
-	// router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
+	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
