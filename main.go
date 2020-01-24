@@ -58,7 +58,7 @@ func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 	}
 	*cs = append(*cs, c)
 	newCocktail := &c
-	db, dbErr := gorm.Open("sqlite3", "cocktails.db")
+	db, dbErr := gorm.Open("sqlite3", "db/cocktails.db")
 	if dbErr != nil {
 		panic("failed to connect")
 	}
@@ -74,7 +74,7 @@ func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	db, err := gorm.Open("sqlite3", "cocktails.db")
+	db, err := gorm.Open("sqlite3", "db/cocktails.db")
 	if err != nil {
 		panic("failed to connect to database")
 	}
@@ -84,8 +84,19 @@ func main() {
 	db.AutoMigrate(&cks.Instruction{})
 	db.AutoMigrate(&cks.Cocktail{})
 
-	whiteRussian := cks.Cocktail{Name: "White Russian", Description: "A decadent adult milkshake", Ingredients: wrIngredients, Directions: wrDirections}
-	dryMartini := cks.Cocktail{Name: "Dry Martini", Description: "Preferred beverage of James Bond", Ingredients: dmIngredients, Directions: dmDirections}
+	whiteRussian := cks.Cocktail{
+		Name:        "White Russian",
+		Glass:       "short glass",
+		Description: "A decadent adult milkshake",
+		Ingredients: wrIngredients,
+		Directions:  wrDirections}
+	dryMartini := cks.Cocktail{
+		Name:        "Dry Martini",
+		Description: "Preferred beverage of James Bond",
+		Glass:       "martini glass",
+		Garnish:     "olive or lemon twist",
+		Ingredients: dmIngredients,
+		Directions:  dmDirections}
 	whiteRussian.Print()
 	dryMartini.Print()
 	cocktailsSlice := Cocktails{whiteRussian, dryMartini}

@@ -29,6 +29,8 @@ type Cocktail struct {
 	gorm.Model
 	Name        string        `gorm:"unique;not null" json:"cocktail_name"`
 	Description string        `json:"description"`
+	Glass       string        `json:"glass"`
+	Garnish     string        `json:"garnish"`
 	Ingredients []Ingredient  `gorm:"foreignkey:CocktailIngRefer" json:"ingredients_list"`
 	Directions  []Instruction `gorm:"foreignkey:CocktailDirRefer;" json:"directions"`
 }
