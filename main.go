@@ -115,7 +115,5 @@ func findCocktail(w http.ResponseWriter, r *http.Request) {
 	var result cks.Cocktail
 	db.Where("id = ?", id).First(&result)
 	getIngredientsAndDirections(&result)
-	// w.Header().Set("Content-Type", "application-json")
-	tpl.ExecuteTemplate(w, "cocktail.gohtml", result)
-	// fmt.Fprintf(w, result.MakeCocktailJSON())
+	tpl.ExecuteTemplate(w, "cocktail.html", result)
 }
