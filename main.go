@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"text/template"
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
@@ -18,7 +19,33 @@ type Cocktails []cks.Cocktail
 type cocktail cks.Cocktail
 
 var cocktails Cocktails
+var tpl *template.Template
 
+func init() {
+	tpl = template.Must(template.ParseGlob("tmpl/*"))
+}
+
+func main() {
+	db, err := gorm.Open("sqlite3", "db/cocktails.db")
+	if err != nil {
+		panic("failed to connect to database")
+	}
+	defer db.Close()
+
+	db.AutoMigrate(&cks.Ingredient{})
+	db.AutoMigrate(&cks.Instruction{})
+	db.AutoMigrate(&cks.Cocktail{})
+	db.Find(&cocktails)
+	cs := &cocktails
+	fmt.Printf("%T", cs)
+	router := mux.NewRouter()
+	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
+	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
+	router.HandleFunc("/view/{id}/", findCocktail).Methods(http.MethodGet)
+	log.Fatal(http.ListenAndServe(":8080", router))
+}
+
+// gets the ingredients and directions for a given cocktail from the db
 func getIngredientsAndDirections(c *cks.Cocktail) {
 	db, err := gorm.Open("sqlite3", "db/cocktails.db")
 	if err != nil {
@@ -53,22 +80,6 @@ func getListOfCocktails(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, cktls)
 }
 
-func findCocktail(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-	fmt.Println(vars)
-	db, err := gorm.Open("sqlite3", "db/cocktails.db")
-	if err != nil {
-		panic("failed to connect to database")
-	}
-	defer db.Close()
-	var results cks.Cocktail
-	db.Where("id = ?", id).First(&results)
-	getIngredientsAndDirections(&results)
-	w.Header().Set("Content-Type", "application-json")
-	fmt.Fprintf(w, results.MakeCocktailJSON())
-}
-
 func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 	var c cks.Cocktail
 	if err := json.NewDecoder(r.Body).Decode(&c); err != nil {
@@ -92,22 +103,19 @@ func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", bs)
 }
 
-func main() {
+func findCocktail(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	fmt.Println(vars)
 	db, err := gorm.Open("sqlite3", "db/cocktails.db")
 	if err != nil {
 		panic("failed to connect to database")
 	}
 	defer db.Close()
-
-	db.AutoMigrate(&cks.Ingredient{})
-	db.AutoMigrate(&cks.Instruction{})
-	db.AutoMigrate(&cks.Cocktail{})
-	db.Find(&cocktails)
-	cs := &cocktails
-	fmt.Printf("%T", cs)
-	router := mux.NewRouter()
-	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
-	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
-	router.HandleFunc("/view/{id}/", findCocktail).Methods(http.MethodGet)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	var result cks.Cocktail
+	db.Where("id = ?", id).First(&result)
+	getIngredientsAndDirections(&result)
+	// w.Header().Set("Content-Type", "application-json")
+	tpl.ExecuteTemplate(w, "cocktail.gohtml", result)
+	// fmt.Fprintf(w, result.MakeCocktailJSON())
 }
