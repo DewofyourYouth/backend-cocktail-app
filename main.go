@@ -47,7 +47,6 @@ func main() {
 }
 
 // Route Handlers for templates
-
 // Main page, displays a list of links to available cocktail recipes
 func index(w http.ResponseWriter, r *http.Request) {
 	db, err := gorm.Open("sqlite3", "db/cocktails.db")

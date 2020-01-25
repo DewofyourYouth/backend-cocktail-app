@@ -134,3 +134,64 @@ Content-Type: application/json
     }
   ]
 }
+
+### Mojito
+
+POST http://127.0.0.1:8080/add/
+Content-Type: application/json
+
+{
+  "cocktail_name": "Mojito",
+  "description": "A refreshing beverage with mint and rum.",
+  "glass": "highball",
+  "garnish": "mint sprig",
+  "ingredients": [
+    {
+      "name": "white rum",
+      "amount": 2, 
+      "unit": "oz"
+    },
+    {
+    "name": "mint leaves",
+    "amount": 3, 
+    "unit": "count"
+    },
+    {
+    "name": "fresh lime juice",
+    "amount": 0.75, 
+    "unit": "oz"
+    },
+    {
+    "name": "simple syrup",
+    "amount": 0.5, 
+    "unit": "oz"
+    },
+    {
+    "name": "club sode",
+    "amount": 2, 
+    "unit": "oz"
+    }
+  ],
+  "directions": [
+    {
+      "step": 1,
+      "instruction": "Lightly muddle the mint in a shaker."
+    },
+    {
+      "step": 2,
+      "instruction": "Add the rum, lime juice, simple syrup and ice and give it a brief shake."
+    },
+    {
+      "step": 3,
+      "instruction": "Strain into a highball glass over fresh ice."
+    },
+    {
+      "step": 4,
+      "instruction": "Top with the club soda."
+    },
+    {
+      "step": 5,
+      "instruction": "Garnish with mint sprig"
+    }
+  ]
+}
