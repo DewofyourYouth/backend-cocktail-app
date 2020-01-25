@@ -37,7 +37,6 @@ func main() {
 	db.AutoMigrate(&cks.Cocktail{})
 	db.Find(&cocktails)
 	cs := &cocktails
-	fmt.Printf("%T", cs)
 	router := mux.NewRouter()
 	router.HandleFunc("/", index)
 	router.HandleFunc("/list/", getListOfCocktails).Methods(http.MethodGet)
