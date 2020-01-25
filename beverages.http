@@ -91,3 +91,46 @@ Content-Type: application/json
     }
   ]
 }
+
+### Dry Martini
+
+POST http://127.0.0.1:8080/add/
+Content-Type: application/json
+
+{
+  "cocktail_name": "Dry Martini",
+  "description": "Prefered beverage of 007.",
+  "glass": "martini glass",
+  "garnish": "olive or lemon twist",
+  "ingredients": [
+    {
+      "name": "cracked ice",
+      "amount": 2, 
+      "unit": "large cubes"
+    },
+    {
+    "name": "London dry gin",
+    "amount": 2.5, 
+    "unit": "ounce"
+    },
+    {
+    "name": "dry vermouth",
+    "amount": 0.5, 
+    "unit": "ounce"
+    }
+  ],
+  "directions": [
+    {
+      "step": 1,
+      "instruction": "In mixing glass or cocktail shaker filled with ice, combine gin and vermouth."
+    },
+    {
+      "step": 2,
+      "instruction": "Stir well, about 30 seconds, then strain into martini glass."
+    },
+    {
+      "step": 3,
+      "instruction": "Garnish with olive or lemon twist and serve."
+    }
+  ]
+}
