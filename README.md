@@ -19,5 +19,6 @@
 - 🔲 Users and auth
 - 🔲 Add user and image field to cocktail
 - 🔲 GUI for image upload
+- 🔲 Nice styling
 - 🔲 Postcard export and share on Instagram & Twitter etc.
 
