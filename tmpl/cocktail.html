@@ -1,29 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Cocktail Recipes: {{.Name}} </title>
-</head>
-<body>
-  <h1>Cocktail: {{.Name}} </h1>
-  <h2>{{.Description}}</h2>
-  <h4>Ingredients</h4>
-  <ul>
-  {{with .Ingredients}}
-    {{range .}}
-      <li>{{.Amount}} {{.Unit}} {{.Name}}</li>
-    {{end}}
-  {{end}}
-  </ul>
-  <h4>Directions</h4>
-  <ol>
-    {{with .Directions}}
-    {{range .}}
-      <li>{{.Instruction}}</li>
-    {{end}}
-  {{end}}
-  </ol>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Cocktail Recipes: {{.Name}}</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row jumbotron">
+        <div class="col-12">
+          <h1>Cocktail: {{.Name}}</h1>
+          <h4>{{.Description}}</h4>
+        </div>
+      </div>
+      <h4>Ingredients</h4>
+      <ul>
+        {{with .Ingredients}} {{range .}}
+        <li>{{.Amount}} {{.Unit}} {{.Name}}</li>
+        {{end}} {{end}}
+      </ul>
+      <h4>Directions</h4>
+      <ol>
+        {{with .Directions}} {{range .}}
+        <li>{{.Instruction}}</li>
+        {{end}} {{end}}
+      </ol>
+    </div>
+  </body>
 </html>

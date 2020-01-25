@@ -41,7 +41,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
 	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
-	router.HandleFunc("/view/{id}/", findCocktail).Methods(http.MethodGet)
+	router.HandleFunc("/cocktail/{id}/", viewCocktail).Methods(http.MethodGet)
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
@@ -103,10 +103,9 @@ func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", bs)
 }
 
-func findCocktail(w http.ResponseWriter, r *http.Request) {
+func viewCocktail(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	fmt.Println(vars)
 	db, err := gorm.Open("sqlite3", "db/cocktails.db")
 	if err != nil {
 		panic("failed to connect to database")
