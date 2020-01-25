@@ -31,10 +31,11 @@ func main() {
 		panic("failed to connect to database")
 	}
 	defer db.Close()
-
+	// Migrate the models for DB
 	db.AutoMigrate(&cks.Ingredient{})
 	db.AutoMigrate(&cks.Instruction{})
 	db.AutoMigrate(&cks.Cocktail{})
+	// get all cocktail models from DB
 	db.Find(&cocktails)
 	cs := &cocktails
 	router := mux.NewRouter()
