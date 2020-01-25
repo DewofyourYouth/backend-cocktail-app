@@ -46,6 +46,40 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", router))
 }
 
+// Route Handlers for templates
+
+// Main page, displays a list of links to available cocktail recipes
+func index(w http.ResponseWriter, r *http.Request) {
+	db, err := gorm.Open("sqlite3", "db/cocktails.db")
+	if err != nil {
+		panic("failed to connect to database")
+	}
+	db.Close()
+	var results cks.Cocktails
+
+	for _, v := range cocktails {
+		getIngredientsAndDirections(&v)
+		results = append(results, v)
+	}
+	cocktails = Cocktails(results)
+	tpl.ExecuteTemplate(w, "index.html", cocktails)
+}
+
+// displays the detail view of individual recipes
+func viewCocktail(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	db, err := gorm.Open("sqlite3", "db/cocktails.db")
+	if err != nil {
+		panic("failed to connect to database")
+	}
+	defer db.Close()
+	var result cks.Cocktail
+	db.Where("id = ?", id).First(&result)
+	getIngredientsAndDirections(&result)
+	tpl.ExecuteTemplate(w, "cocktail.html", result)
+}
+
 // gets the ingredients and directions for a given cocktail from the db
 func getIngredientsAndDirections(c *cks.Cocktail) {
 	db, err := gorm.Open("sqlite3", "db/cocktails.db")
@@ -61,7 +95,7 @@ func getIngredientsAndDirections(c *cks.Cocktail) {
 	c.Directions = append(c.Directions, directions...)
 }
 
-// API Route handlers
+// API Route handlers for JSON
 func getListOfCocktails(w http.ResponseWriter, r *http.Request) {
 	db, err := gorm.Open("sqlite3", "db/cocktails.db")
 	if err != nil {
@@ -75,7 +109,6 @@ func getListOfCocktails(w http.ResponseWriter, r *http.Request) {
 		results = append(results, v)
 	}
 	cocktails = Cocktails(results)
-	fmt.Println(cocktails)
 	cktls := cks.Cocktails(cocktails).MakeCocktailJSON()
 	w.Header().Set("Content-Type", "application-json")
 	fmt.Fprintf(w, cktls)
@@ -102,35 +135,4 @@ func (cs *Cocktails) addCocktail(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(201)
 	fmt.Fprintf(w, "%s", bs)
-}
-
-func viewCocktail(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
-	db, err := gorm.Open("sqlite3", "db/cocktails.db")
-	if err != nil {
-		panic("failed to connect to database")
-	}
-	defer db.Close()
-	var result cks.Cocktail
-	db.Where("id = ?", id).First(&result)
-	getIngredientsAndDirections(&result)
-	tpl.ExecuteTemplate(w, "cocktail.html", result)
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
-	db, err := gorm.Open("sqlite3", "db/cocktails.db")
-	if err != nil {
-		panic("failed to connect to database")
-	}
-	db.Close()
-	var results cks.Cocktails
-
-	for _, v := range cocktails {
-		getIngredientsAndDirections(&v)
-		results = append(results, v)
-	}
-	cocktails = Cocktails(results)
-	fmt.Println(cocktails)
-	tpl.ExecuteTemplate(w, "index.html", cocktails)
 }
