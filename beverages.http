@@ -3,7 +3,7 @@ GET http://127.0.0.1:8080/
 
 
 
-###
+### White Russian
 POST http://127.0.0.1:8080/add/
 Content-Type: application/json
 
@@ -41,6 +41,53 @@ Content-Type: application/json
     {
       "step": 3,
       "instruction": "Top with whole milk"
+    }
+  ]
+}
+
+### Mint Julep
+
+POST http://127.0.0.1:8080/add/
+Content-Type: application/json
+
+{
+  "cocktail_name": "Mint Julep",
+  "description": "Signature drink of the Kentucky Derby.",
+  "glass": "Julep or rocks",
+  "garnish": "bitters, mint sprig",
+  "ingredients": [
+    {
+      "name": "simple syrup",
+      "amount": 0.25, 
+      "unit": "ounce"
+    },
+    {
+    "name": "mint leaves",
+    "amount": 8, 
+    "unit": "leaves"
+    },
+    {
+    "name": "bourbon",
+    "amount": 2, 
+    "unit": "ounce"
+    }
+  ],
+  "directions": [
+    {
+      "step": 1,
+      "instruction": "In a Julep cup or rocks glass, lightly muddle the mint and syrup."
+    },
+    {
+      "step": 2,
+      "instruction": "Add the bourbon and pack tightly with crushed ice."
+    },
+    {
+      "step": 3,
+      "instruction": "Stir until the cup is frosted on the outside."
+    }, 
+    {
+      "step": 4,
+      "instruction": "Top with more crushed ice to form an ice dome and garnish with a mint sprig and few optional drops of bitters."
     }
   ]
 }
