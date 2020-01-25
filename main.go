@@ -39,7 +39,8 @@ func main() {
 	cs := &cocktails
 	fmt.Printf("%T", cs)
 	router := mux.NewRouter()
-	router.HandleFunc("/", getListOfCocktails).Methods(http.MethodGet)
+	router.HandleFunc("/", index)
+	router.HandleFunc("/list/", getListOfCocktails).Methods(http.MethodGet)
 	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
 	router.HandleFunc("/cocktail/{id}/", viewCocktail).Methods(http.MethodGet)
 	log.Fatal(http.ListenAndServe(":8080", router))
@@ -115,4 +116,21 @@ func viewCocktail(w http.ResponseWriter, r *http.Request) {
 	db.Where("id = ?", id).First(&result)
 	getIngredientsAndDirections(&result)
 	tpl.ExecuteTemplate(w, "cocktail.html", result)
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+	db, err := gorm.Open("sqlite3", "db/cocktails.db")
+	if err != nil {
+		panic("failed to connect to database")
+	}
+	db.Close()
+	var results cks.Cocktails
+
+	for _, v := range cocktails {
+		getIngredientsAndDirections(&v)
+		results = append(results, v)
+	}
+	cocktails = Cocktails(results)
+	fmt.Println(cocktails)
+	tpl.ExecuteTemplate(w, "index.html", cocktails)
 }
