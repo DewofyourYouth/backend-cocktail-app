@@ -7,7 +7,7 @@
 - ☑️ Basic structs for cocktail recipes
 - ☑️ GORM integration
 - ☑️ API endpoint handlers for adding and listing cocktail recipes
-- ☑️ Basic HTML templates for displaying the list of cocktails, as well as individual detailed recipes
+- ☑️ Basic working HTML templates for displaying the list of cocktails, as well as individual detailed recipes
 - ☑️ SQLite3 database
 
 ### To Do
