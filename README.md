@@ -1,6 +1,6 @@
 # Cocktail App
 
-## This is an app for keeping track of cocktail recipes
+This is an app for keeping track of cocktail recipes and sharing them on social media in an appealing format.
 
 ### Done
 
