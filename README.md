@@ -24,7 +24,7 @@
 - 🔲 Nice styling
 - 🔲 Postcard export and share on Instagram & Twitter etc.
 
-Previews
+Previews (so far)
 
 ![Image Page](static/pics/cocktailshomepage.png)
 
