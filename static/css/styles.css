@@ -4,7 +4,7 @@
   border-radius: 0;
 }
 
-h1 {
+body {
   font-family: 'Abril Fatface', cursive;
 }
 
@@ -14,7 +14,7 @@ a {
 
 .cocktail {
   display: grid;
-  width: 100vw;
+  width: 100%;
   grid-template-columns: 1fr 4fr;
   grid-gap: 30px;
 }
