@@ -3,10 +3,12 @@ package main
 import (
 	cks "cocktails/cocktails"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
 	"text/template"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
@@ -22,7 +24,7 @@ var cocktails Cocktails
 var tpl *template.Template
 
 func init() {
-	tpl = template.Must(template.ParseGlob("tmpl/*"))
+	tpl = template.Must(template.ParseGlob("./templates/*"))
 }
 
 func main() {
@@ -38,12 +40,28 @@ func main() {
 	// get all cocktail models from DB
 	db.Find(&cocktails)
 	cs := &cocktails
+	// pics := flag.String("pics", "./pics", "/pics")
+	flag.Parse()
+	var dir string
+
+	flag.StringVar(&dir, "dir", "./static", "the directory to serve files from. Defaults to the current dir")
+	flag.Parse()
+
 	router := mux.NewRouter()
+	srv := &http.Server{
+		Handler: router,
+		Addr:    "127.0.0.1:8000",
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
 	router.HandleFunc("/", index)
 	router.HandleFunc("/list/", getListOfCocktails).Methods(http.MethodGet)
 	router.HandleFunc("/add/", cs.addCocktail).Methods(http.MethodPost)
 	router.HandleFunc("/cocktail/{id}/", viewCocktail).Methods(http.MethodGet)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(dir))))
+	log.Fatal(srv.ListenAndServe())
 }
 
 // Route Handlers for templates
@@ -61,6 +79,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		results = append(results, v)
 	}
 	cocktails = Cocktails(results)
+	w.Header().Set("Content-Type", "text/html")
 	tpl.ExecuteTemplate(w, "index.html", cocktails)
 }
 
@@ -76,6 +95,7 @@ func viewCocktail(w http.ResponseWriter, r *http.Request) {
 	var result cks.Cocktail
 	db.Where("id = ?", id).First(&result)
 	getIngredientsAndDirections(&result)
+	w.Header().Set("Content-Type", "text/html")
 	tpl.ExecuteTemplate(w, "cocktail.html", result)
 }
 

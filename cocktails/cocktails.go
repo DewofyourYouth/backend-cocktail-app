@@ -31,6 +31,7 @@ type Cocktail struct {
 	Description string        `json:"description"`
 	Glass       string        `json:"glass"`
 	Garnish     string        `json:"garnish"`
+	ImageURL    string        `json:"image_url"`
 	Ingredients []Ingredient  `gorm:"foreignkey:CocktailIngRefer" json:"ingredients"`
 	Directions  []Instruction `gorm:"foreignkey:CocktailDirRefer;" json:"directions"`
 }

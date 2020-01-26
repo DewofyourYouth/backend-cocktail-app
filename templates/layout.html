@@ -15,26 +15,7 @@
   <body>
     <div class="container">
       <div class="row jumbotron">
-        <div class="col-12">
-          <h1>Cocktail: {{.Name}}</h1>
-          <h4>{{.Description}}</h4>
-        </div>
-      </div>
-      <h4>Ingredients</h4>
-      <ul>
-        {{with .Ingredients}} {{range .}}
-        <li>{{.Amount}} {{.Unit}} {{.Name}}</li>
-        {{end}} {{end}}
-      </ul>
-      <h4>Directions</h4>
-      <ol>
-        {{with .Directions}} {{range .}}
-        <li>{{.Instruction}}</li>
-        {{end}} {{end}}
-      </ol>
-      <p class="text-center">
-        <a href="/" class="btn btn-info">🏠</a>
-      </p>
-    </div>
+
+       </div>
   </body>
 </html>

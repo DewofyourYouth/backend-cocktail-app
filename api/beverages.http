@@ -1,6 +1,7 @@
+GET http://127.0.0.1:8080/list/
+
+### Home Page
 GET http://127.0.0.1:8080/
-
-
 
 
 ### White Russian
@@ -11,6 +12,7 @@ Content-Type: application/json
   "cocktail_name": "White Russian",
   "description": "The dude abides.",
   "glass": "short glass",
+  "image_url": "whiterussian.jpg",
   "garnish": null,
   "ingredients": [
     {
@@ -54,6 +56,7 @@ Content-Type: application/json
   "cocktail_name": "Mint Julep",
   "description": "Signature drink of the Kentucky Derby.",
   "glass": "Julep or rocks",
+  "image_url": "mintjulep.jpg",
   "garnish": "bitters, mint sprig",
   "ingredients": [
     {
@@ -101,6 +104,7 @@ Content-Type: application/json
   "cocktail_name": "Dry Martini",
   "description": "Prefered beverage of 007.",
   "glass": "martini glass",
+  "image_url": "drymartini.jpg",
   "garnish": "olive or lemon twist",
   "ingredients": [
     {
@@ -145,6 +149,7 @@ Content-Type: application/json
   "description": "A refreshing beverage with mint and rum.",
   "glass": "highball",
   "garnish": "mint sprig",
+  "image_url": "mojito.jpg",
   "ingredients": [
     {
       "name": "white rum",
