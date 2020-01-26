@@ -23,3 +23,9 @@
 - 🔲 GUI for image upload
 - 🔲 Nice styling
 - 🔲 Postcard export and share on Instagram & Twitter etc.
+
+Previews
+
+![Image Page](static/pics/cocktailshomepage.png)
+
+![Mint Julep Page](static/pics/mintjulep.png)
