@@ -26,6 +26,8 @@
 
 ### Previews (so far)
 
+The templates are just for the interim before the React.js frontend.
+
 ![Image Page](static/pics/cocktailshomepage.png)
 
 ![Mint Julep Page](static/pics/mintjulep.png)
