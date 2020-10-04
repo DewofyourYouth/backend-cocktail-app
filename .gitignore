@@ -2,3 +2,4 @@ db/config.go
 db/cocktails.db
 .vscode
 cocktailsapp
+.idea
