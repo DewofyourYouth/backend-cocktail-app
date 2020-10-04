@@ -93,8 +93,8 @@ func UnmarshalCocktailJSON(s string) []Cocktail {
 	return cocktails
 }
 
-// IntiateModels is a
-func IntiateModels() {
+// InitiateModels initiates the models
+func InitiateModels() {
 	db, err := gorm.Open("sqlite3", "cocktails.db")
 	if err != nil {
 		panic("failed to connect to database")
