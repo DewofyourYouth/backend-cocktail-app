@@ -1,4 +1,4 @@
 db/config.go
-cocktails.db
+db/cocktails.db
 .vscode
 cocktailsapp
